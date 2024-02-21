@@ -6,7 +6,7 @@ getaddrinfo6.o: getaddrinfo6.c getaddrinfo6.h
 server6.o: server6.c default_config.h getaddrinfo6.h
 client6.o: client6.c default_config.h getaddrinfo6.h
 
-server6: server6.o getaddrinfo6.o default_config.h
+server6: server6.o getaddrinfo6.o
 	$(CC) server6.o getaddrinfo6.o -o server6 -lrt
 
 client6: client6.o getaddrinfo6.o
