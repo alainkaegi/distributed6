@@ -6,8 +6,12 @@
 #include <sys/types.h>
 #include <time.h>
 
-#include "default_config.h"
 #include "getaddrinfo6.h"
+
+// INADDR_ANY: by default, bind to all local interfaces (see ip(7) man page)
+static char default_host[] = "::";
+
+static in_port_t port = 2000;
 
 static unsigned long ticket = 0;
 
@@ -43,7 +47,6 @@ static void configure_timer() {
 int main(int argc, char *argv[])
 {
     char *host = default_host;
-    in_port_t port = default_port;
 
     // Check for arguments
     if (argc > 1) {
