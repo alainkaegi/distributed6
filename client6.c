@@ -30,6 +30,9 @@ static in_port_t port = 2000;
  * * https://en.wikipedia.org/wiki/Getaddrinfo
  */
 
+static char request[] = "hello\n";
+static char reply[2048];
+
 int main(int argc, char *argv[])
 {
     char *host = default_host;
@@ -69,7 +72,6 @@ int main(int argc, char *argv[])
     }
 
     // Send a request
-    char request[] = "hello\n";
     if (sendto(fd,
                request,
                strlen(request),
@@ -81,12 +83,12 @@ int main(int argc, char *argv[])
     }
 
     // Get a reply and print it
-    int reply;
-    if (recvfrom(fd, &reply, sizeof(reply), 0, NULL, NULL) < 0){
+    ssize_t size;
+    if ((size = recvfrom(fd, &reply, sizeof(reply), 0, NULL, NULL)) < 0) {
         perror("client6: recvfrom");
         exit(1);
     }
-    printf("%d\n", ntohl(reply));
+    printf("%.*s", (int)size, reply);
 
     // Clean up and exit
     close(fd);
