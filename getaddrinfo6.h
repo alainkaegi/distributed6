@@ -1,5 +1,9 @@
 #pragma once
 
+#include <netdb.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+
 /**
  * Get an IPv6 addrinfo structure that can be used with a UDP socket.
  *
