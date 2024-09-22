@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
     }
 
     // Send a request
-    char request[] = "hello";
+    char request[] = "hello\n";
     if (sendto(fd,
                request,
                strlen(request),
