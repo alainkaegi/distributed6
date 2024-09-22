@@ -7,8 +7,11 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include "default_config.h"
 #include "getaddrinfo6.h"
+
+static char default_host[] = "localhost";
+
+static in_port_t port = 2000;
 
 /**
  * The client of a simple distributed application.
@@ -30,7 +33,6 @@
 int main(int argc, char *argv[])
 {
     char *host = default_host;
-    in_port_t port = default_port;
 
     // Check for arguments
     if (argc > 1) {
