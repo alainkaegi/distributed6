@@ -44,6 +44,8 @@ static void configure_timer() {
     }
 }
 
+static char request[2048];
+
 int main(int argc, char *argv[])
 {
     char *host = default_host;
@@ -93,24 +95,23 @@ int main(int argc, char *argv[])
 
     // Listen to the socket
     while (1) {
-        char request[6];
+        ssize_t size;
         struct sockaddr_in6 client_address;
         socklen_t client_address_length = sizeof(client_address); // needed on MacOS
 
-        if (recvfrom(fd,
-                     request,
-                     sizeof(request),
-                     0,
-                     (struct sockaddr *)&client_address,
-                     &client_address_length) < 0){
+        if ((size = recvfrom(fd,
+                             request,
+                             sizeof(request),
+                             0,
+                             (struct sockaddr *)&client_address,
+                             &client_address_length)) < 0) {
             perror("server6: recvfrom");
             exit(1);
         }
 
-        int data = htonl(ticket);
         if (sendto(fd,
-                   &data,
-                   sizeof(data),
+                   request,
+                   size,
                    0,
                    (struct sockaddr *)&client_address,
                    client_address_length) < 0){
