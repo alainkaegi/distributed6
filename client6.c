@@ -11,7 +11,7 @@
 
 static char default_host[] = "localhost";
 
-static in_port_t port = 2000;
+static in_port_t default_port = 2000;
 
 /**
  * The client of a simple distributed application.
@@ -36,12 +36,19 @@ static char reply[2048];
 int main(int argc, char *argv[])
 {
     char *host = default_host;
+    in_port_t port = default_port;
 
     // Check for arguments
     if (argc > 1) {
         host = argv[1];
     }
+    if (argc > 2) {
+        port = atoi(argv[2]);
+    }
 
+    if (argc > 1) {
+        host = argv[1];
+    }
     // Get the IPv6 address
     struct addrinfo *addrinfo;
     int s = getaddrinfo6(host, port, &addrinfo);

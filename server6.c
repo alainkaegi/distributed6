@@ -11,7 +11,7 @@
 // INADDR_ANY: by default, bind to all local interfaces (see ip(7) man page)
 static char default_host[] = "::";
 
-static in_port_t port = 2000;
+static in_port_t default_port = 2000;
 
 static unsigned long ticket = 0;
 
@@ -49,10 +49,14 @@ static char request[2048];
 int main(int argc, char *argv[])
 {
     char *host = default_host;
+    in_port_t port = default_port;
 
     // Check for arguments
     if (argc > 1) {
         host = argv[1];
+    }
+    if (argc > 2) {
+        port = atoi(argv[2]);
     }
 
     // Configure a recurring timer
